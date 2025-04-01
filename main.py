@@ -16,6 +16,8 @@ while True:
     success, img = cap.read()
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = hands.process(imgRGB)
+    
+   
 
     if results.multi_hand_landmarks:
         for handLms in results.multi_hand_landmarks:
@@ -29,7 +31,7 @@ while True:
                 x1, y1 = lmList[8][1], lmList[8][2]
                 x_screen = np.interp(x1, (100, 600), (0, screen_w))
                 y_screen = np.interp(y1, (100, 400), (0, screen_h))
-                pyautogui.moveTo(screen_w - x_screen, y_screen, duration=0.1)
+                pyautogui.moveTo(screen_w - x_screen, y_screen, duration=0.3)
 
                 x2, y2 = lmList[4][1], lmList[4][2]
                 index_thumb_dist = math.hypot(x2 - x1, y2 - y1)
@@ -46,12 +48,14 @@ while True:
                     
                 y4 = lmList[12][2]  
                 scroll_distance = y4 - y1  
-                if abs(scroll_distance) > 30:  
+                if abs(scroll_distance) > 20:  
                     if scroll_distance > 0:  
-                        pyautogui.scroll(-5)  
+                        pyautogui.scroll(-40)  
                     else:  
-                        pyautogui.scroll(5)  
+                        pyautogui.scroll(40)  
+                
 
+               
 
     cv2.imshow("Virtual Mouse", img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
